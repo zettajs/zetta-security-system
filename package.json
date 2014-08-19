@@ -1,0 +1,29 @@
+{
+  "name": "zetta-security-system",
+  "version": "0.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/zettajs/zetta-security-system.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zettajs/zetta-security-system/issues"
+  },
+  "homepage": "https://github.com/zettajs/zetta-security-system",
+  "dependencies": {
+    "bonescript": "^0.2.4",
+    "zetta": "^0.4.0",
+    "zetta-auto-scout": "^0.2.0",
+    "zetta-buzzer-bonescript-driver": "0.0.0",
+    "zetta-microphone-bonescript-driver": "0.0.0",
+    "zetta-pir-bonescript-driver": "0.0.0",
+    "zetta-wemo-driver": "0.0.1"
+  }
+}
