@@ -6,12 +6,12 @@ The following documentation will guide you through how to build an IoT Security 
 
 1. Materials
 2. Steps of the tutorial
-  * [Piezo buzzer](../blob/master/docs/PIEZO.md)
-  * [PIR motion detection](../blob/master/docs/PIR.md)
-  * [Microphone sound detection](../blob/master/docs/MICROPHONE.md)
-  * [WeMo Actuator](../blob/master/docs/WEMO.md)
-  * [Writing a driver](../blob/master/docs/DRIVERS.md)
-  * [Next Steps](../blob/master/docs/NEXTSTEPS.md)
+  * [Piezo buzzer](../docs/PIEZO.md)
+  * [PIR motion detection](../docs/PIR.md)
+  * [Microphone sound detection](../docs/MICROPHONE.md)
+  * [WeMo Actuator](../docs/WEMO.md)
+  * [Writing a driver](../docs/DRIVERS.md)
+  * [Next Steps](../docs/NEXTSTEPS.md)
 3. Getting help
 4. Glossary
 5. Citations
