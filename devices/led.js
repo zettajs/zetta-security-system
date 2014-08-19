@@ -7,6 +7,7 @@ var Led = module.exports = function(pin) {
   this.pin = pin || "P9_23";
 
   //Everything is off to start
+  bone.pinMode(this.pin, bone.OUTPUT);
   bone.digitalWrite(this.pin, 0);
 };
 util.inherits(Led, Device);
