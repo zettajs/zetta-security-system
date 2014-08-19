@@ -9,9 +9,9 @@ var Led = require('./devices/led');
 var app = require('./apps/app');
 
 zetta()
-  .use(Buzzer)
-  .use(PIR)
-  .use(Microphone)
+  .use(Buzzer, 'P9_14')
+  .use(PIR, 'P9_12')
+  .use(Microphone, 'P9_36')
   .use(WeMo)
   .use(new AutoScout('led', Led, 'P8_39'))
   .load(app)
