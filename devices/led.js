@@ -1,0 +1,51 @@
+var Device = require('zetta').Device;
+var util = require('util');
+var bone = require('bonescript');
+
+var Led = module.exports = function(pin) {
+  Device.call(this);
+  this.pin = pin || "P9_23";
+
+  //Everything is off to start
+  bone.digitalWrite(this.pin, 0);
+};
+util.inherits(Led, Device);
+
+Led.prototype.init = function(config) {
+  config
+    .state('off')
+    .type('led')
+    .name('LED')
+    .when('on', { allow: ['turn-off', 'toggle'] })
+    .when('off', { allow: ['turn-on', 'toggle'] })
+    .map('turn-on', this.turnOn)
+    .map('turn-off', this.turnOff)
+    .map('toggle', this.toggle);
+};
+
+Led.prototype.turnOn = function(cb) {
+  var self = this;
+  bone.digitalWrite(this.pin, 1, function() {
+    self.state = 'on';
+    cb();
+  });
+};
+
+Led.prototype.turnOff = function(cb) {
+  var self = this;
+  bone.digitalWrite(this.pin, 1, function() {
+    self.state = 'off';
+    cb();
+  });
+};
+
+Led.prototype.toggle = function(cb) {
+  if (this.state === 'on') {
+    this.call('turn-off', cb);
+  } else {
+    this.call('turn-on', cb);
+  }
+};
+
+
+
