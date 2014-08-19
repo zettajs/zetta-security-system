@@ -34,6 +34,8 @@ their corresponding states, and `beep` will swap the state between `on` and `off
 **TIP**: Ensure you install while on the BeagleBone operating system. The package
 installation will fail if you use your native OS.
 
+**TIP**: Every module you'll use in this tutorial is open source. This one can be found here https://github.com/zettajs/zetta-buzzer-bonescript-driver. 
+
 ###Adding code to Server
 
 Now it's time to actually wire up our Zetta driver into the server node. Below is a snippet we'll go through line by line.
