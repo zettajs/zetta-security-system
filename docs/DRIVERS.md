@@ -99,10 +99,29 @@ LED.prototype.turnOff = function(cb) {
 
 ```
 
+* First we'll require all the necessary libraries we'll need
+  * We'll need the Device class to create our driver
+  * We'll need the util module for inheritance functionality
+  * We'll need bonescript for actually interacting with hardware on the beaglebone
+* The first thing we'll do is setup the constructor for our LED. Here you set parameters and initialize different things about the device.
+  * We setup to inherit from the Device class to get functionality for API generation.
+  * **TIP**: Any property on your javascript class that doesn't include an _ will be exposed by the API.
+* Next we'll implement the init function. This is where you'll implement your state machine.
+  * `state` sets the initial state of your device. We're starting in the off state
+  * `type` sets what the type of the device is. In our case it's `led`.
+  * `name` sets a human readable name for our device. It's an optional parameter.
+  * `when` sets up what transitions are available based on the state of the device.
+    * `when` our device is in state `"on"` it can only use the `"off"` transition
+    * `when` our device is in state `"off"` it can only use the `"on"` transition
+  * `map` will setup the functions that will be called for particular transitions. Whenever a transition occurs the function it is mapped to will be called.
+    * when the `"on"` transition is called we will call the `turnOn` function of this particular class
+    * when the `"off"` transition is called we will call the `turnOff` function of this particular class
+  * `turnOn` will actually turn on the LED on the BeagleBone. It is provided a callback that you should call once the transition has completed.
+  * `turnOff` will actually turn off the LED on the BeagleBone. It is provided a callback that you should call once the transition has completed.
 
 ###Incorporating our driver into Zetta
 
-Our Server:
+To wire up our custom device to the server is easy. We simply require the scout module and pass it in with the `use` function. Similar to the modules we've already used.
 
 ```javascript
 var zetta = require('zetta');
@@ -123,7 +142,7 @@ zetta()
   .listen(1337);
 ```
 
-Our App:
+Our app doesn't change much either. Simply add another query that looks for a device with type of `"led"` and add it into the currently orchestrated interactions.
 
 ```javascript
 module.exports = function(server) {
