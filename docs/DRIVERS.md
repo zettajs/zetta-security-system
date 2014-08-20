@@ -11,6 +11,7 @@ that you want.
 3. State machine for an LED
 4. Writing our driver
 5. Incorporating our driver into Zetta
+6. Sample API response
 
 ###Getting Started
 
@@ -24,14 +25,15 @@ In there create a folder called `LED`. This folder will contain two files. One f
 In the next section we'll cover what it takes to setup our scout. However, you should end this section of the tutorial
 with a file structure that looks like so:
 
-+ `/security-system`
-  + `app.js`
-  + `server.js`
-  + `package.json`
++ `/zetta-security-system`
+  + `/apps`
+    + `app.js`
   + `/devices`
     + `/led`
       + `index.js`
       + `led_driver.js`
+  + `server.js`
+  + `package.json`
 
 ###Create a basic scout
 
@@ -39,7 +41,9 @@ Our scouting logic is unique for this particular app. We set one up ahead of tim
 one line for your scout.
 
 ```javascript
-module.exports = require('zetta-led-bonescript-scout');
+var LED = require('./led_driver.js');
+var Scout = require('zetta-auto-scout');
+module.exports = new AutoScout('led', LED);
 ```
 
 That will export your scout for use in Zetta.
@@ -49,7 +53,7 @@ That will export your scout for use in Zetta.
 Next we'll create our state machine for use in Zetta. Our LED state machine will be basic. Drawing it out with state machine notation helps.
 It should look a little like this.
 
-**INSERT STATE MACHINE DIAGRAM**
+![state machine](../docs/img/state_machine.png)
 
 As you can see from the diagram. When our LED is `off` it can only transition to the `on` state, and conversely when the state is `on` it can only transition to `off`.
 
@@ -75,10 +79,10 @@ LED.prototype.init = function(config) {
     .state('off')
     .type('led')
     .name('My LED')
-    .when('on', { allow: ['off']})
-    .when('off', { allow: ['on']})
-    .map('on', this.turnOn)
-    .map('off', this.turnOff);
+    .when('on', { allow: ['turn-off']})
+    .when('off', { allow: ['turn-on']})
+    .map('turn-on', this.turnOn)
+    .map('turn-off', this.turnOff);
 };
 
 LED.prototype.turnOn = function(cb) {
@@ -180,5 +184,80 @@ module.exports = function(server) {
       }
     });
   });
+}
+```
+
+###Sample API response
+
+```json
+{
+  "class": [
+    "device"
+  ],
+  "properties": {
+    "id": "e478ee7f-ebc6-42c5-a4d4-1128845bdbe8",
+    "pin": "P9_15",
+    "type": "led",
+    "name": "LED",
+    "state": "off"
+  },
+  "actions": [
+    {
+      "name": "turn-on",
+      "method": "POST",
+      "href": "http://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19/devices/e478ee7f-ebc6-42c5-a4d4-1128845bdbe8",
+      "fields": [
+        {
+          "name": "action",
+          "type": "hidden",
+          "value": "turn-on"
+        }
+      ]
+    },
+    {
+      "name": "toggle",
+      "method": "POST",
+      "href": "http://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19/devices/e478ee7f-ebc6-42c5-a4d4-1128845bdbe8",
+      "fields": [
+        {
+          "name": "action",
+          "type": "hidden",
+          "value": "toggle"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "rel": [
+        "self"
+      ],
+      "href": "http://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19/devices/e478ee7f-ebc6-42c5-a4d4-1128845bdbe8"
+    },
+    {
+      "title": "beaglebone",
+      "rel": [
+        "up",
+        "http://rels.zettajs.io/server"
+      ],
+      "href": "http://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19"
+    },
+    {
+      "title": "state",
+      "rel": [
+        "monitor",
+        "http://rels.zettajs.io/object-stream"
+      ],
+      "href": "ws://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19/events?topic=led%2Fe478ee7f-ebc6-42c5-a4d4-1128845bdbe8%2Fstate"
+    },
+    {
+      "title": "logs",
+      "rel": [
+        "monitor",
+        "http://rels.zettajs.io/object-stream"
+      ],
+      "href": "ws://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19/events?topic=led%2Fe478ee7f-ebc6-42c5-a4d4-1128845bdbe8%2Flogs"
+    }
+  ]
 }
 ```

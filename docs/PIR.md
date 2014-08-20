@@ -97,5 +97,62 @@ IoT system.
 
 
 ```json
-{FILL_IN:"SOON!"}
+{
+  "class": [
+    "device"
+  ],
+  "properties": {
+    "id": "b8622d08-8721-41f5-8ebc-706e17e8818a",
+    "pin": "P9_12",
+    "type": "pir",
+    "name": "PIR Sensor",
+    "state": "no-motion"
+  },
+  "actions": [
+    {
+      "name": "motion",
+      "method": "POST",
+      "href": "http://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19/devices/b8622d08-8721-41f5-8ebc-706e17e8818a",
+      "fields": [
+        {
+          "name": "action",
+          "type": "hidden",
+          "value": "motion"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "rel": [
+        "self"
+      ],
+      "href": "http://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19/devices/b8622d08-8721-41f5-8ebc-706e17e8818a"
+    },
+    {
+      "title": "beaglebone",
+      "rel": [
+        "up",
+        "http://rels.zettajs.io/server"
+      ],
+      "href": "http://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19"
+    },
+    {
+      "title": "state",
+      "rel": [
+        "monitor",
+        "http://rels.zettajs.io/object-stream"
+      ],
+      "href": "ws://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19/events?topic=pir%2Fb8622d08-8721-41f5-8ebc-706e17e8818a%2Fstate"
+    },
+    {
+      "title": "logs",
+      "rel": [
+        "monitor",
+        "http://rels.zettajs.io/object-stream"
+      ],
+      "href": "ws://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19/events?topic=pir%2Fb8622d08-8721-41f5-8ebc-706e17e8818a%2Flogs"
+    }
+  ]
+}
 ```

@@ -18,27 +18,27 @@ The following documentation will guide you through how to build an IoT Security 
 
 ###Materials
 
-* 1x [BeagleBone Black]()
-* 1x [Piezo Element]()
-* 1x [PIR Sensor]()
-* 1x [Microphone]()
-* 1x [Belkin WeMo (optional)]()
-* 1x [LED]()
-* 1x [120 Ohm Resistor]()
-* 1x [Pack of jumper wire]()
-* 1x [BreadBoard]()
+* 1x [BeagleBone Black](https://www.sparkfun.com/products/12857)
+* 1x [Piezo Element](https://www.sparkfun.com/products/7950)
+* 1x [PIR Sensor](https://www.sparkfun.com/products/8630)
+* 1x [Microphone](https://www.sparkfun.com/products/9964)
+* 1x [Belkin WeMo (optional)](http://www.amazon.com/WeMo-Electronics-Anywhere-Automation-Smartphones/dp/B00BB2MMNE/ref=sr_1_2?ie=UTF8&qid=1408561011&sr=8-2&keywords=wemo)
+* 1x [LED](https://www.sparkfun.com/products/9590)
+* 1x [330 Ohm Resistor](https://www.sparkfun.com/products/11507)
+* 1x [Pack of jumper wire](https://www.sparkfun.com/products/11242)
+* 1x [BreadBoard](https://www.sparkfun.com/products/9567)
 
 ###Steps of the tutorial
 
 The steps of the tutorial are broken out by component of the security system. It'll be important to follow the steps in order to ensure your
 circuitry is built correctly, and fits properly on the breadboard.
 
-1. [Piezo buzzer](../blob/master/docs/PIEZO.md)
-2. [PIR motion detection](../blob/master/docs/PIR.md)
-3. [Microphone sound detection](../blob/master/docs/MICROPHONE.md)
-4. [WeMo Actuator](../blob/master/docs/WEMO.md)
-5. [Writing a driver](../blob/master/docs/DRIVERS.md)
-6. [Next Steps](../blob/master/docs/NEXTSTEPS.md)
+1. [Piezo buzzer](../docs/PIEZO.md)
+2. [PIR motion detection](../docs/PIR.md)
+3. [Microphone sound detection](../docs/MICROPHONE.md)
+4. [WeMo Actuator](../docs/WEMO.md)
+5. [Writing a driver](../docs/DRIVERS.md)
+6. [Next Steps](../docs/NEXTSTEPS.md)
 
 ###Getting Help
 
@@ -47,6 +47,7 @@ If you're going through this project, and run into an issue feel free to use the
 * matt@apigee.com
 * https://groups.google.com/forum/#!forum/zetta-discuss
 * https://github.com/zettajs/zetta/issues
+* Reference Documentation: http://zettajs.github.io/
 
 ###Glossary
 
@@ -54,3 +55,5 @@ We may end up using some terms that are new to you. Here are their quick definit
 
 * [Actuator](http://en.wikipedia.org/wiki/Actuator): a type of motor that is responsible for moving or controlling a mechanism or system.
 * [Sensor](http://en.wikipedia.org/wiki/Sensor): a device that detects events or changes in quantities and provides a corresponding output.
+* Driver: the Zetta representation of a device. It includes a Scout for finding the physical device, and a driver for interacting with the device via javascript.
+* Scout: responsible for searching for a physical device, and alerting Zetta to it's existence.
