@@ -11,6 +11,7 @@ that you want.
 3. State machine for an LED
 4. Writing our driver
 5. Incorporating our driver into Zetta
+6. Sample API response
 
 ###Getting Started
 
@@ -78,10 +79,10 @@ LED.prototype.init = function(config) {
     .state('off')
     .type('led')
     .name('My LED')
-    .when('on', { allow: ['off']})
-    .when('off', { allow: ['on']})
-    .map('on', this.turnOn)
-    .map('off', this.turnOff);
+    .when('on', { allow: ['turn-off']})
+    .when('off', { allow: ['turn-on']})
+    .map('turn-on', this.turnOn)
+    .map('turn-off', this.turnOff);
 };
 
 LED.prototype.turnOn = function(cb) {
@@ -183,5 +184,80 @@ module.exports = function(server) {
       }
     });
   });
+}
+```
+
+###Sample API response
+
+```json
+{
+  "class": [
+    "device"
+  ],
+  "properties": {
+    "id": "e478ee7f-ebc6-42c5-a4d4-1128845bdbe8",
+    "pin": "P9_15",
+    "type": "led",
+    "name": "LED",
+    "state": "off"
+  },
+  "actions": [
+    {
+      "name": "turn-on",
+      "method": "POST",
+      "href": "http://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19/devices/e478ee7f-ebc6-42c5-a4d4-1128845bdbe8",
+      "fields": [
+        {
+          "name": "action",
+          "type": "hidden",
+          "value": "turn-on"
+        }
+      ]
+    },
+    {
+      "name": "toggle",
+      "method": "POST",
+      "href": "http://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19/devices/e478ee7f-ebc6-42c5-a4d4-1128845bdbe8",
+      "fields": [
+        {
+          "name": "action",
+          "type": "hidden",
+          "value": "toggle"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "rel": [
+        "self"
+      ],
+      "href": "http://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19/devices/e478ee7f-ebc6-42c5-a4d4-1128845bdbe8"
+    },
+    {
+      "title": "beaglebone",
+      "rel": [
+        "up",
+        "http://rels.zettajs.io/server"
+      ],
+      "href": "http://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19"
+    },
+    {
+      "title": "state",
+      "rel": [
+        "monitor",
+        "http://rels.zettajs.io/object-stream"
+      ],
+      "href": "ws://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19/events?topic=led%2Fe478ee7f-ebc6-42c5-a4d4-1128845bdbe8%2Fstate"
+    },
+    {
+      "title": "logs",
+      "rel": [
+        "monitor",
+        "http://rels.zettajs.io/object-stream"
+      ],
+      "href": "ws://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19/events?topic=led%2Fe478ee7f-ebc6-42c5-a4d4-1128845bdbe8%2Flogs"
+    }
+  ]
 }
 ```

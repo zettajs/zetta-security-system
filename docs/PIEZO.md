@@ -63,7 +63,76 @@ our entities. Below is what a sample API response for your piezo module should l
 
 
 ```json
-{FILL_IN:"SOON!"}
+{
+  "class": [
+    "device"
+  ],
+  "properties": {
+    "id": "18662cab-92b2-42d3-9e5e-1c0422da81f6",
+    "pin": "P9_14",
+    "type": "buzzer",
+    "name": "Buzzer",
+    "state": "off"
+  },
+  "actions": [
+    {
+      "name": "beep",
+      "method": "POST",
+      "href": "http://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19/devices/18662cab-92b2-42d3-9e5e-1c0422da81f6",
+      "fields": [
+        {
+          "name": "action",
+          "type": "hidden",
+          "value": "beep"
+        }
+      ]
+    },
+    {
+      "name": "turn-on",
+      "method": "POST",
+      "href": "http://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19/devices/18662cab-92b2-42d3-9e5e-1c0422da81f6",
+      "fields": [
+        {
+          "name": "action",
+          "type": "hidden",
+          "value": "turn-on"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "rel": [
+        "self"
+      ],
+      "href": "http://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19/devices/18662cab-92b2-42d3-9e5e-1c0422da81f6"
+    },
+    {
+      "title": "beaglebone",
+      "rel": [
+        "up",
+        "http://rels.zettajs.io/server"
+      ],
+      "href": "http://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19"
+    },
+    {
+      "title": "state",
+      "rel": [
+        "monitor",
+        "http://rels.zettajs.io/object-stream"
+      ],
+      "href": "ws://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19/events?topic=buzzer%2F18662cab-92b2-42d3-9e5e-1c0422da81f6%2Fstate"
+    },
+    {
+      "title": "logs",
+      "rel": [
+        "monitor",
+        "http://rels.zettajs.io/object-stream"
+      ],
+      "href": "ws://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19/events?topic=buzzer%2F18662cab-92b2-42d3-9e5e-1c0422da81f6%2Flogs"
+    }
+  ]
+}
 ```
 
 A device in zetta has three different pieces of information attached to it in the API.

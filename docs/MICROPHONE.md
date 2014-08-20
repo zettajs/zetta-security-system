@@ -84,7 +84,52 @@ module.exports = function(server) {
 Below is a sample API response for our microphone.
 
 ```json
-{FILL_IN:"SOON!"}
+{
+  "class": [
+    "device"
+  ],
+  "properties": {
+    "id": "5637ad21-9530-49f3-a819-14ccd12904ae",
+    "pin": "P9_36",
+    "type": "microphone",
+    "name": "Microphone",
+    "volume": 1.055
+  },
+  "actions": null,
+  "links": [
+    {
+      "rel": [
+        "self"
+      ],
+      "href": "http://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19/devices/5637ad21-9530-49f3-a819-14ccd12904ae"
+    },
+    {
+      "title": "beaglebone",
+      "rel": [
+        "up",
+        "http://rels.zettajs.io/server"
+      ],
+      "href": "http://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19"
+    },
+    {
+      "title": "volume",
+      "rel": [
+        "monitor",
+        "http://rels.zettajs.io/object-stream"
+      ],
+      "href": "ws://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19/events?topic=microphone%2F5637ad21-9530-49f3-a819-14ccd12904ae%2Fvolume"
+    },
+    {
+      "title": "logs",
+      "rel": [
+        "monitor",
+        "http://rels.zettajs.io/object-stream"
+      ],
+      "href": "ws://zetta-cloud-2.herokuapp.com/servers/38f645ed-73da-4742-8f20-c46317a48c19/events?topic=microphone%2F5637ad21-9530-49f3-a819-14ccd12904ae%2Flogs"
+    }
+  ]
+}
+
 ```
 
 * The important difference between the device, and the others we've already used is that we include a link to monitor sensor readings over websockets.
