@@ -31,4 +31,4 @@ You'll find the step by step guide for building the circuits and writing the Zet
 
 ##Getting Started
 
-Navigate to the [README](../blob/master/docs/README.md) under the docs folder to get a supplies list, and start the tutorial.
+Navigate to the [README](../master/docs/README.md) under the docs folder to get a supplies list, and start the tutorial.
