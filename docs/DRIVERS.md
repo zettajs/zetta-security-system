@@ -51,7 +51,7 @@ That will export your scout for use in Zetta.
 Next we'll create our state machine for use in Zetta. Our LED state machine will be basic. Drawing it out with state machine notation helps.
 It should look a little like this.
 
-![state machine](../blob/master/docs/img/state_machine.png)
+![state machine](../docs/img/state_machine.png)
 
 As you can see from the diagram. When our LED is `off` it can only transition to the `on` state, and conversely when the state is `on` it can only transition to `off`.
 
