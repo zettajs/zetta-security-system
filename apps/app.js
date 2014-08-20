@@ -6,7 +6,7 @@ module.exports = function(server) {
       console.log('Motion Detected')
     });
 
-    pir.on('motion', function() {
+    pir.on('no-motion', function() {
       console.log('Motion is gone')
     });
   });
