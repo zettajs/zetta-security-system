@@ -22,8 +22,8 @@
     "zetta": "^0.4.0",
     "zetta-auto-scout": "^0.2.0",
     "zetta-buzzer-bonescript-driver": "^0.1.0",
-    "zetta-microphone-bonescript-driver": "^0.2.0",
-    "zetta-pir-bonescript-driver": "^0.2.0",
+    "zetta-microphone-bonescript-driver": "^0.3.0",
+    "zetta-pir-bonescript-driver": "^0.4.0",
     "zetta-wemo-driver": "^0.0.1"
   }
 }
