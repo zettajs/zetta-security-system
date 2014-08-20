@@ -39,7 +39,9 @@ Our scouting logic is unique for this particular app. We set one up ahead of tim
 one line for your scout.
 
 ```javascript
-module.exports = require('zetta-led-bonescript-scout');
+var LED = require('./led_driver.js');
+var Scout = require('zetta-auto-scout');
+module.exports = new AutoScout('led', LED);
 ```
 
 That will export your scout for use in Zetta.
