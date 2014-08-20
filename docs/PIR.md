@@ -55,9 +55,16 @@ module.exports = function(server) {
   var pirQuery = server.where({type: 'pir'});
 
   server.observe([buzzerQuery, pirQuery], function(buzzer, pir){
-      pir.on('motion', function(){
-        buzzer.call('beep');
-      });
+    var microphoneReading = 0;
+
+    pir.on('motion', function() {
+      buzzer.call('turn-on', function() {});
+    });
+
+    pir.on('no-motion', function() {
+      buzzer.call('turn-off', function() {});
+    });
+
   });
 }
 ```

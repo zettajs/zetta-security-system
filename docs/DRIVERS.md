@@ -159,30 +159,26 @@ module.exports = function(server) {
   server.observe([buzzerQuery, pirQuery, microphoneQuery, wemoQuery, ledQuery], function(buzzer, pir, microphone, wemo, led){
     var microphoneReading = 0;
 
-    microphone.streams.amplitude.on('data', function(data){
-      microphoneReading = data.data;
-
-      if(microphoneReading < 100 && wemo.state === 'on') {
-        wemo.call('off');
-      }
-
-      if(microphoneReading < 100 && led.state === 'on') {
-        led.call('off');
-      }
-    });
-
-    pir.on('motion', function(){
-      if(microphoneReading > 100) {
-        buzzer.call('beep');
-        if(wemo.state === 'off') {
-          wemo.call('on');
-        }
-
-        if(led.state === 'off') {
-          led.call('on');
+    microphone.streams.volume.on('data', function(msg){
+      if (msg.data > 10) {
+        if (pir.state === 'motion') {
+          buzzer.call('turn-on', function() {});
+          wemo.call('turn-on', function(){});
+          led.call('turn-on', function(){});
+        } else {
+          buzzer.call('turn-off', function() {});
+          wemo.call('turn-off', function(){});
+          led.call('turn-off', function(){});
         }
       }
     });
+
+    pir.on('no-motion', function() {
+      buzzer.call('turn-off', function() {});
+      wemo.call('turn-off', function(){});
+      led.call('turn-off', function(){});
+    });
+
   });
 }
 ```

@@ -62,15 +62,20 @@ module.exports = function(server) {
   server.observe([buzzerQuery, pirQuery, microphoneQuery], function(buzzer, pir, microphone){
     var microphoneReading = 0;
 
-    microphone.streams.amplitude.on('data', function(data){
-      microphoneReading = data.data;
-    });
-
-    pir.on('motion', function(){
-      if(microphoneReading > 100) {
-        buzzer.call('beep');
+    microphone.streams.volume.on('data', function(msg){
+      if (msg.data > 10) {
+        if (pir.state === 'motion') {
+          buzzer.call('turn-on', function() {});
+        } else {
+          buzzer.call('turn-off', function() {});
+        }
       }
     });
+
+    pir.on('no-motion', function() {
+      buzzer.call('turn-off', function() {});
+    });
+
   });
 }
 ```
