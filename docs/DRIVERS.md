@@ -24,14 +24,15 @@ In there create a folder called `LED`. This folder will contain two files. One f
 In the next section we'll cover what it takes to setup our scout. However, you should end this section of the tutorial
 with a file structure that looks like so:
 
-+ `/security-system`
-  + `app.js`
-  + `server.js`
-  + `package.json`
++ `/zetta-security-system`
+  + `/apps`
+    + `app.js`
   + `/devices`
     + `/led`
       + `index.js`
       + `led_driver.js`
+  + `server.js`
+  + `package.json`
 
 ###Create a basic scout
 

@@ -18,15 +18,15 @@ The following documentation will guide you through how to build an IoT Security 
 
 ###Materials
 
-* 1x [BeagleBone Black]()
-* 1x [Piezo Element]()
-* 1x [PIR Sensor]()
-* 1x [Microphone]()
-* 1x [Belkin WeMo (optional)]()
-* 1x [LED]()
-* 1x [120 Ohm Resistor]()
-* 1x [Pack of jumper wire]()
-* 1x [BreadBoard]()
+* 1x [BeagleBone Black](https://www.sparkfun.com/products/12857)
+* 1x [Piezo Element](https://www.sparkfun.com/products/7950)
+* 1x [PIR Sensor](https://www.sparkfun.com/products/8630)
+* 1x [Microphone](https://www.sparkfun.com/products/9964)
+* 1x [Belkin WeMo (optional)](http://www.amazon.com/WeMo-Electronics-Anywhere-Automation-Smartphones/dp/B00BB2MMNE/ref=sr_1_2?ie=UTF8&qid=1408561011&sr=8-2&keywords=wemo)
+* 1x [LED](https://www.sparkfun.com/products/9590)
+* 1x [330 Ohm Resistor](https://www.sparkfun.com/products/11507)
+* 1x [Pack of jumper wire](https://www.sparkfun.com/products/11242)
+* 1x [BreadBoard](https://www.sparkfun.com/products/9567)
 
 ###Steps of the tutorial
 
