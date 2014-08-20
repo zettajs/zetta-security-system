@@ -1,17 +1,24 @@
 module.exports = function(server) {
-  var PIR = server.where({ type: 'pir' });
-  var Buzzer = server.where({ type: 'buzzer' });
+  var buzzerQuery = server.where({type: 'buzzer'});
+  var pirQuery = server.where({type: 'pir'});
+  var microphoneQuery = server.where({type: 'microphone'});
 
-  server.observe( [PIR, Buzzer], function(pir, buzzer) {
-    console.log('Found buzzer and pir')
-    pir.on('motion', function() {
-      buzzer.call('turn-on', function() {});
-      console.log('Motion Detected')
+  server.observe([buzzerQuery, pirQuery, microphoneQuery], function(buzzer, pir, microphone){
+    var microphoneReading = 0;
+
+    microphone.streams.volume.on('data', function(msg){
+      if (msg.data > 10) {
+        if (pir.state === 'motion') {
+          buzzer.call('turn-on', function() {});
+        } else {
+          buzzer.call('turn-off', function() {});
+        }
+      }
     });
+
     pir.on('no-motion', function() {
       buzzer.call('turn-off', function() {});
-      console.log('Motion is gone')
     });
-  });
 
-};
+  });
+}
