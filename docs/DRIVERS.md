@@ -129,21 +129,23 @@ To wire up our custom device to the server is easy. We simply require the scout 
 
 ```javascript
 var zetta = require('zetta');
-var piezo = require('zetta-buzzer-bonescript-driver');
-var pir = require('zetta-pir-bonescript-driver');
-var microphone = require('zetta-microphone-bonescript-driver');
-var wemo = require('zetta-wemo-driver');
-var app = require('./apps');
-var LED = require('./devices/led');
+var Buzzer = require('zetta-buzzer-bonescript-driver');
+var PIR = require('zetta-pir-bonescript-driver');
+var Microphone = require('zetta-microphone-bonescript-driver');
+var WeMo = require('zetta-wemo-driver');
+var AutoScout = require('zetta-auto-scout');
+var Led = require('./devices/led');
+
+var app = require('./apps/app');
 
 zetta()
-  .use(piezo)
-  .use(pir)
-  .use(microphone)
-  .use(wemo)
-  .use(LED)
+  .use(Buzzer, 'P9_14')
+  .use(PIR, 'P9_12')
+  .use(Microphone, 'P9_36')
+  .use(WeMo)
+  .use(new AutoScout('led', Led, 'P9_15'))
   .load(app)
-  .listen(1337);
+  .listen(1337)
 ```
 
 Our app doesn't change much either. Simply add another query that looks for a device with type of `"led"` and add it into the currently orchestrated interactions.

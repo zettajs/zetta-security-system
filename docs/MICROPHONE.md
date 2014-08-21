@@ -34,17 +34,18 @@ Now it's time to actually wire up our Zetta driver into the server node.
 
 ```javascript
 var zetta = require('zetta');
-var piezo = require('zetta-buzzer-bonescript-driver');
-var pir = require('zetta-pir-bonescript-driver');
-var microphone = require('zetta-microphone-bonescript-driver');
-var app = require('./apps');
+var Buzzer = require('zetta-buzzer-bonescript-driver');
+var PIR = require('zetta-pir-bonescript-driver');
+var Microphone = require('zetta-microphone-bonescript-driver');
+
+var app = require('./apps/app');
 
 zetta()
-  .use(piezo)
-  .use(pir)
-  .use(microphone)
+  .use(Buzzer, 'P9_14')
+  .use(PIR, 'P9_12')
+  .use(Microphone, 'P9_36')
   .load(app)
-  .listen(1337);
+  .listen(1337)
 ```
 
 * Here we've updated our code to let Zetta know that we want to use our Microphone sensor to detect sound.

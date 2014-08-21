@@ -33,13 +33,17 @@ Now it's time to actually wire up our Zetta driver into the server node. Below i
 
 ```javascript
 var zetta = require('zetta');
-var piezo = require('zetta-buzzer-bonescript-driver');
-var pir = require('zetta-pir-bonescript-driver');
+var Buzzer = require('zetta-buzzer-bonescript-driver');
+var PIR = require('zetta-pir-bonescript-driver');
+
+
+var app = require('./apps/app');
 
 zetta()
-  .use(piezo)
-  .use(pir)
-  .listen(1337);
+  .use(Buzzer, 'P9_14')
+  .use(PIR, 'P9_12')
+  .load(app)
+  .listen(1337)
 ```
 
 * Here we've updated our code to let Zetta know that we want to use our PIR sensor to detect motion.
