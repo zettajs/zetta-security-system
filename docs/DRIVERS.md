@@ -66,41 +66,51 @@ var Device = require('zetta').Device;
 var util = require('util');
 var bone = require('bonescript');
 
-var LED = module.exports = function(){
+var Led = module.exports = function(pin) {
   Device.call(this);
-  this.pin = "P9_11";
-  bone.pinMode(this.pin, bone.OUTPUT);
-  bone.digitalWrite(this.pin, bone.LOW);
-};
-util.inherits(LED, Device);
+  this.pin = pin || "P9_23";
 
-LED.prototype.init = function(config) {
+  //Everything is off to start
+  bone.pinMode(this.pin, bone.OUTPUT);
+  bone.digitalWrite(this.pin, 0);
+};
+util.inherits(Led, Device);
+
+Led.prototype.init = function(config) {
   config
     .state('off')
     .type('led')
-    .name('My LED')
-    .when('on', { allow: ['turn-off']})
-    .when('off', { allow: ['turn-on']})
+    .name('LED')
+    .when('on', { allow: ['turn-off', 'toggle'] })
+    .when('off', { allow: ['turn-on', 'toggle'] })
     .map('turn-on', this.turnOn)
-    .map('turn-off', this.turnOff);
+    .map('turn-off', this.turnOff)
+    .map('toggle', this.toggle);
 };
 
-LED.prototype.turnOn = function(cb) {
-  bone.digitalWrite(this.pin, bone.HIGH);
-  this.state = 'on';
-  if(cb) {
+Led.prototype.turnOn = function(cb) {
+  var self = this;
+  bone.digitalWrite(this.pin, 1, function() {
+    self.state = 'on';
     cb();
+  });
+};
+
+Led.prototype.turnOff = function(cb) {
+  var self = this;
+  bone.digitalWrite(this.pin, 1, function() {
+    self.state = 'off';
+    cb();
+  });
+};
+
+Led.prototype.toggle = function(cb) {
+  if (this.state === 'on') {
+    this.call('turn-off', cb);
+  } else {
+    this.call('turn-on', cb);
   }
 };
-
-LED.prototype.turnOff = function(cb) {
-  bone.digitalWrite(this.pin, bone.LOW);
-  this.state = 'off';
-  if(cb) {
-    cb();
-  }
-};
-
 ```
 
 * First we'll require all the necessary libraries we'll need
