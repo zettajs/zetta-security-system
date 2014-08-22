@@ -34,17 +34,18 @@ Now it's time to actually wire up our Zetta driver into the server node.
 
 ```javascript
 var zetta = require('zetta');
-var piezo = require('zetta-buzzer-bonescript-driver');
-var pir = require('zetta-pir-bonescript-driver');
-var microphone = require('zetta-microphone-bonescript-driver');
-var app = require('./apps');
+var Buzzer = require('zetta-buzzer-bonescript-driver');
+var PIR = require('zetta-pir-bonescript-driver');
+var Microphone = require('zetta-microphone-bonescript-driver');
+
+var app = require('./apps/app');
 
 zetta()
-  .use(piezo)
-  .use(pir)
-  .use(microphone)
+  .use(Buzzer, 'P9_14')
+  .use(PIR, 'P9_12')
+  .use(Microphone, 'P9_36')
   .load(app)
-  .listen(1337);
+  .listen(1337)
 ```
 
 * Here we've updated our code to let Zetta know that we want to use our Microphone sensor to detect sound.
@@ -62,15 +63,20 @@ module.exports = function(server) {
   server.observe([buzzerQuery, pirQuery, microphoneQuery], function(buzzer, pir, microphone){
     var microphoneReading = 0;
 
-    microphone.streams.amplitude.on('data', function(data){
-      microphoneReading = data.data;
-    });
-
-    pir.on('motion', function(){
-      if(microphoneReading > 100) {
-        buzzer.call('beep');
+    microphone.streams.volume.on('data', function(msg){
+      if (msg.data > 10) {
+        if (pir.state === 'motion') {
+          buzzer.call('turn-on', function() {});
+        } else {
+          buzzer.call('turn-off', function() {});
+        }
       }
     });
+
+    pir.on('no-motion', function() {
+      buzzer.call('turn-off', function() {});
+    });
+
   });
 }
 ```

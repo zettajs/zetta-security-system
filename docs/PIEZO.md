@@ -42,11 +42,11 @@ Now it's time to actually wire up our Zetta driver into the server node. Below i
 
 ```javascript
 var zetta = require('zetta');
-var piezo = require('zetta-buzzer-bonescript-driver');
+var Buzzer = require('zetta-buzzer-bonescript-driver');
 
 zetta()
-  .use(piezo)
-  .listen(1337);
+  .use(Buzzer, 'P9_14')
+  .listen(1337)
 ```
 
 * The first line requires the Zetta package. This contains all the functionality needed to wire up an IoT app.

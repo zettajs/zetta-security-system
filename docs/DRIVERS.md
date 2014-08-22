@@ -66,41 +66,50 @@ var Device = require('zetta').Device;
 var util = require('util');
 var bone = require('bonescript');
 
-var LED = module.exports = function(){
+var Led = module.exports = function(pin) {
   Device.call(this);
   this.pin = "P9_41";
+  //Everything is off to start
   bone.pinMode(this.pin, bone.OUTPUT);
-  bone.digitalWrite(this.pin, bone.LOW);
+  bone.digitalWrite(this.pin, 0);
 };
-util.inherits(LED, Device);
+util.inherits(Led, Device);
 
-LED.prototype.init = function(config) {
+Led.prototype.init = function(config) {
   config
     .state('off')
     .type('led')
-    .name('My LED')
-    .when('on', { allow: ['turn-off']})
-    .when('off', { allow: ['turn-on']})
+    .name('LED')
+    .when('on', { allow: ['turn-off', 'toggle'] })
+    .when('off', { allow: ['turn-on', 'toggle'] })
     .map('turn-on', this.turnOn)
-    .map('turn-off', this.turnOff);
+    .map('turn-off', this.turnOff)
+    .map('toggle', this.toggle);
 };
 
-LED.prototype.turnOn = function(cb) {
-  bone.digitalWrite(this.pin, bone.HIGH);
-  this.state = 'on';
-  if(cb) {
+Led.prototype.turnOn = function(cb) {
+  var self = this;
+  bone.digitalWrite(this.pin, 1, function() {
+    self.state = 'on';
     cb();
+  });
+};
+
+Led.prototype.turnOff = function(cb) {
+  var self = this;
+  bone.digitalWrite(this.pin, 1, function() {
+    self.state = 'off';
+    cb();
+  });
+};
+
+Led.prototype.toggle = function(cb) {
+  if (this.state === 'on') {
+    this.call('turn-off', cb);
+  } else {
+    this.call('turn-on', cb);
   }
 };
-
-LED.prototype.turnOff = function(cb) {
-  bone.digitalWrite(this.pin, bone.LOW);
-  this.state = 'off';
-  if(cb) {
-    cb();
-  }
-};
-
 ```
 
 * First we'll require all the necessary libraries we'll need
@@ -129,21 +138,23 @@ To wire up our custom device to the server is easy. We simply require the scout 
 
 ```javascript
 var zetta = require('zetta');
-var piezo = require('zetta-buzzer-bonescript-driver');
-var pir = require('zetta-pir-bonescript-driver');
-var microphone = require('zetta-microphone-bonescript-driver');
-var wemo = require('zetta-wemo-driver');
-var app = require('./apps');
-var LED = require('./devices/led');
+var Buzzer = require('zetta-buzzer-bonescript-driver');
+var PIR = require('zetta-pir-bonescript-driver');
+var Microphone = require('zetta-microphone-bonescript-driver');
+var WeMo = require('zetta-wemo-driver');
+var AutoScout = require('zetta-auto-scout');
+var Led = require('./devices/led');
+
+var app = require('./apps/app');
 
 zetta()
-  .use(piezo)
-  .use(pir)
-  .use(microphone)
-  .use(wemo)
-  .use(LED)
+  .use(Buzzer, 'P9_14')
+  .use(PIR, 'P9_12')
+  .use(Microphone, 'P9_36')
+  .use(WeMo)
+  .use(new AutoScout('led', Led, 'P9_15'))
   .load(app)
-  .listen(1337);
+  .listen(1337)
 ```
 
 Our app doesn't change much either. Simply add another query that looks for a device with type of `"led"` and add it into the currently orchestrated interactions.
@@ -159,30 +170,26 @@ module.exports = function(server) {
   server.observe([buzzerQuery, pirQuery, microphoneQuery, wemoQuery, ledQuery], function(buzzer, pir, microphone, wemo, led){
     var microphoneReading = 0;
 
-    microphone.streams.amplitude.on('data', function(data){
-      microphoneReading = data.data;
-
-      if(microphoneReading < 100 && wemo.state === 'on') {
-        wemo.call('off');
-      }
-
-      if(microphoneReading < 100 && led.state === 'on') {
-        led.call('off');
-      }
-    });
-
-    pir.on('motion', function(){
-      if(microphoneReading > 100) {
-        buzzer.call('beep');
-        if(wemo.state === 'off') {
-          wemo.call('on');
-        }
-
-        if(led.state === 'off') {
-          led.call('on');
+    microphone.streams.volume.on('data', function(msg){
+      if (msg.data > 10) {
+        if (pir.state === 'motion') {
+          buzzer.call('turn-on', function() {});
+          wemo.call('turn-on', function(){});
+          led.call('turn-on', function(){});
+        } else {
+          buzzer.call('turn-off', function() {});
+          wemo.call('turn-off', function(){});
+          led.call('turn-off', function(){});
         }
       }
     });
+
+    pir.on('no-motion', function() {
+      buzzer.call('turn-off', function() {});
+      wemo.call('turn-off', function(){});
+      led.call('turn-off', function(){});
+    });
+
   });
 }
 ```
