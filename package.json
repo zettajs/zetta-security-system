@@ -19,7 +19,7 @@
   "homepage": "https://github.com/zettajs/zetta-security-system",
   "dependencies": {
     "bonescript": "^0.2.4",
-    "zetta": "^0.5.0",
+    "zetta": "^0.6.0",
     "zetta-auto-scout": "^0.2.0",
     "zetta-buzzer-bonescript-driver": "*",
     "zetta-microphone-bonescript-driver": "*",
