@@ -17,7 +17,7 @@ and follow a state machine model. Drivers are distributed and used in the form o
 
 Here is a simple fritzing diagram of what your circuit will look like on the BeagleBone Black.
 
-**Insert Diagram**
+![Hookup Diagram](img/hookup_diagram_step_1.png)
 
 ###Retrieving Driver
 

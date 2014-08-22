@@ -68,7 +68,7 @@ var bone = require('bonescript');
 
 var LED = module.exports = function(){
   Device.call(this);
-  this.pin = "P9_11";
+  this.pin = "P9_41";
   bone.pinMode(this.pin, bone.OUTPUT);
   bone.digitalWrite(this.pin, bone.LOW);
 };
@@ -261,3 +261,7 @@ module.exports = function(server) {
   ]
 }
 ```
+
+### Hookup Diagram
+
+![Hookup Diagram](img/hookup_diagram_step_5.png)

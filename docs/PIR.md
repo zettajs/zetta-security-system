@@ -15,7 +15,7 @@ the driver for this sensor through npm, and wire up an app that will have our bu
 
 Here is a simple fritzing diagram of what your circuit will look like on the BeagleBone Black.
 
-**Insert Diagram**
+![Hookup Diagram](img/hookup_diagram_step_2.png)
 
 ###Retrieving Driver
 

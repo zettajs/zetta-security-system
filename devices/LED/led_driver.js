@@ -4,8 +4,7 @@ var bone = require('bonescript');
 
 var Led = module.exports = function(pin) {
   Device.call(this);
-  this.pin = pin || "P9_23";
-
+  this.pin = "P9_41";
   //Everything is off to start
   bone.pinMode(this.pin, bone.OUTPUT);
   bone.digitalWrite(this.pin, 0);

@@ -24,7 +24,9 @@ The following documentation will guide you through how to build an IoT Security 
 * 1x [Microphone](https://www.sparkfun.com/products/9964)
 * 1x [Belkin WeMo (optional)](http://www.amazon.com/WeMo-Electronics-Anywhere-Automation-Smartphones/dp/B00BB2MMNE/ref=sr_1_2?ie=UTF8&qid=1408561011&sr=8-2&keywords=wemo)
 * 1x [LED](https://www.sparkfun.com/products/9590)
-* 1x [330 Ohm Resistor](https://www.sparkfun.com/products/11507)
+* 1x [56 Ohm Resistor](https://www.sparkfun.com/products/11507)
+* 1x 10K Ohm Resistor
+* 1x 2.2K Ohm Resistor
 * 1x [Pack of jumper wire](https://www.sparkfun.com/products/11242)
 * 1x [BreadBoard](https://www.sparkfun.com/products/9567)
 
@@ -57,3 +59,7 @@ We may end up using some terms that are new to you. Here are their quick definit
 * [Sensor](http://en.wikipedia.org/wiki/Sensor): a device that detects events or changes in quantities and provides a corresponding output.
 * Driver: the Zetta representation of a device. It includes a Scout for finding the physical device, and a driver for interacting with the device via javascript.
 * Scout: responsible for searching for a physical device, and alerting Zetta to it's existence.
+
+### Final Hookup Diagram
+
+![Hookup Diagram](img/hookup_diagram_final.png)
