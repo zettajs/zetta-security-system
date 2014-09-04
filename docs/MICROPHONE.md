@@ -16,7 +16,7 @@ those readings in your Zetta app.
 
 Here is a simple fritzing diagram of what your circuit will look like on the BeagleBone Black.
 
-![Hookup Diagram](img/hookup_diagram_step_3.png)
+![Hookup Diagram](img/hookup_diagram_step_2.png)
 
 ###Retrieving Driver
 
