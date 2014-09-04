@@ -34,35 +34,42 @@ Now it's time to actually wire up our Zetta driver into the server node. Below i
 ```javascript
 var zetta = require('zetta');
 var Buzzer = require('zetta-buzzer-bonescript-driver');
+var Microphone = require('zetta-microphone-bonescript-driver');
 var PIR = require('zetta-pir-bonescript-driver');
-
-
 var app = require('./apps/app');
 
 zetta()
-  .use(Buzzer, 'P9_14')
+  .use(Buzzer)
+  .use(Microphone)
   .use(PIR, 'P9_12')
   .load(app)
   .listen(1337)
 ```
 
 * Here we've updated our code to let Zetta know that we want to use our PIR sensor to detect motion.
+* We've passed in the exact pin on the BeagleBone Black that is required to work on the sensor. It's just additional arguments on the `use()` function.
 
-###Creating your first app
+###Updating your first app
 
-Next we'll want to wire up interactions in Zetta. This is done with apps. Apps are just simple code snippets that wait for devices to come online.
-After devices come online we then orchestrate interactions between devices.
+Now we'll wire up our sound sensor into our app.
 
 ```javascript
 module.exports = function(server) {
   var buzzerQuery = server.where({type: 'buzzer'});
   var pirQuery = server.where({type: 'pir'});
+  var microphoneQuery = server.where({type: 'microphone'});
 
-  server.observe([buzzerQuery, pirQuery], function(buzzer, pir){
+  server.observe([buzzerQuery, pirQuery, microphoneQuery], function(buzzer, pir, microphone){
     var microphoneReading = 0;
 
-    pir.on('motion', function() {
-      buzzer.call('turn-on', function() {});
+    microphone.streams.volume.on('data', function(msg){
+      if (msg.data > 10) {
+        if (pir.state === 'motion') {
+          buzzer.call('turn-on', function() {});
+        } else {
+          buzzer.call('turn-off', function() {});
+        }
+      }
     });
 
     pir.on('no-motion', function() {
@@ -73,33 +80,8 @@ module.exports = function(server) {
 }
 ```
 
-* The first line is an export statement in node. This is so that we can keep our apps modular and separated from the rest of our code.
-  * The `server` variable is an instance of Zetta. We can use functionality attached to it to search for devices.
-* The second line is where we create our first query. Zetta uses query to look for devices, or wait for devices to come online that fill all the parameters given.
-  * This particular query tells Zetta to retrieve the buzzer for us
-* The third line is a query for our PIR sensor.
-* The fourth line is a call to the function `observe`. Zetta waits for devices that fit queries given in the first argument to come online, and then fires the callback.
-  * We want the callback function to fire when `"buzzer"` and `"pir"` devices come online.
-  * The function passes in the state machines of the devices in as individual arguments.
-* The fifth line listens for a `"motion"` transition to occur on the PIR sensor. This is similar to the event emitter pattern in Node.js.
-* The sixth line will call the `"beep"` transition on the buzzer.
-
-After you write this code you need to make sure the app is included in your server file. Update your server to look like so.
-
-```javascript
-var zetta = require('zetta');
-var piezo = require('zetta-buzzer-bonescript-driver');
-var pir = require('zetta-pir-bonescript-driver');
-var app = require('./apps');
-
-zetta()
-  .use(piezo)
-  .use(pir)
-  .load(app)
-  .listen(1337);
-```
-
-The `load` function lets Zetta know that we have a particular app we want it to use. Run your code, and you should have an interaction happening when your sensor detects motion!
+* We've updated our app code to include the new PIR device we've added.
+* We'll now check for movement along with our sound code. If movement is detected we'll trigger the buzzer.
 
 ###API and Browser
 

@@ -35,16 +35,11 @@ Now it's time to actually wire up our Zetta driver into the server node.
 ```javascript
 var zetta = require('zetta');
 var Buzzer = require('zetta-buzzer-bonescript-driver');
-var PIR = require('zetta-pir-bonescript-driver');
 var Microphone = require('zetta-microphone-bonescript-driver');
 
-var app = require('./apps/app');
-
 zetta()
-  .use(Buzzer, 'P9_14')
-  .use(PIR, 'P9_12')
-  .use(Microphone, 'P9_36')
-  .load(app)
+  .use(Buzzer)
+  .use(Microphone)
   .listen(1337)
 ```
 
@@ -52,38 +47,59 @@ zetta()
 
 ###Creating your first app
 
-Now we'll wire up our sound sensor into our app.
+Next we'll want to wire up interactions in Zetta. This is done with apps. Apps are just simple code snippets that wait for devices to come online.
+After devices come online we then orchestrate interactions between devices.
+
 
 ```javascript
 module.exports = function(server) {
   var buzzerQuery = server.where({type: 'buzzer'});
-  var pirQuery = server.where({type: 'pir'});
   var microphoneQuery = server.where({type: 'microphone'});
 
-  server.observe([buzzerQuery, pirQuery, microphoneQuery], function(buzzer, pir, microphone){
+  server.observe([buzzerQuery, microphoneQuery], function(buzzer, pir, microphone){
     var microphoneReading = 0;
 
     microphone.streams.volume.on('data', function(msg){
       if (msg.data > 10) {
-        if (pir.state === 'motion') {
-          buzzer.call('turn-on', function() {});
-        } else {
-          buzzer.call('turn-off', function() {});
-        }
+        buzzer.call('turn-on', function() {});
+      } else {
+        buzzer.call('turn-off', function() {});
       }
-    });
-
-    pir.on('no-motion', function() {
-      buzzer.call('turn-off', function() {});
     });
 
   });
 }
 ```
 
-* Here we've updated our app to search for our microphone sensor.
-* We've also updated to read the `amplitude` stream that provides readings on sound amplitude to us.
-* Now when the PIR sensor detects we check the `microphoneReading` variable, and if it's over 100 we'll buzz our buzzer.
+* The first line is an export statement in node. This is so that we can keep our apps modular and separated from the rest of our code.
+  * The `server` variable is an instance of Zetta. We can use functionality attached to it to search for devices.
+* The second line is where we create our first query. Zetta uses query to look for devices, or wait for devices to come online that fill all the parameters given.
+  * This particular query tells Zetta to retrieve the buzzer for us
+* The third line is a query for our Microphone sensor.
+* The fourth line is a call to the function `observe`. Zetta waits for devices that fit queries given in the first argument to come online, and then fires the callback.
+  * We want the callback function to fire when `"buzzer"` and `"microphone"` devices come online.
+  * The function passes in the state machines of the devices in as individual arguments.
+* The fifth line listens for a `"data"` event to happen on a `"volume"` stream
+* The sixth line will call the `"beep"` transition on the buzzer. If the data value is above `10`
+
+After you write this code you need to make sure the app is included in your server file. Update your server to look like so.
+
+```javascript
+var zetta = require('zetta');
+var Buzzer = require('zetta-buzzer-bonescript-driver');
+var Microphone = require('zetta-microphone-bonescript-driver');
+
+var app = require('./apps/app');
+
+zetta()
+  .use(Buzzer)
+  .use(Microphone)
+  .load(app)
+  .listen(1337)
+```
+
+The `load` function lets Zetta know that we have a particular app we want it to use. Run your code, and you should have an interaction happening when your sensor detects motion!
+
 
 ###API and Browser
 

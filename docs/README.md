@@ -7,8 +7,8 @@ The following documentation will guide you through how to build an IoT Security 
 1. Materials
 2. Steps of the tutorial
   * [Piezo buzzer](../docs/PIEZO.md)
-  * [PIR motion detection](../docs/PIR.md)
   * [Microphone sound detection](../docs/MICROPHONE.md)
+  * [PIR motion detection](../docs/PIR.md)
   * [WeMo Actuator](../docs/WEMO.md)
   * [Writing a driver](../docs/DRIVERS.md)
   * [Next Steps](../docs/NEXTSTEPS.md)
@@ -36,8 +36,8 @@ The steps of the tutorial are broken out by component of the security system. It
 circuitry is built correctly, and fits properly on the breadboard.
 
 1. [Piezo buzzer](../docs/PIEZO.md)
-2. [PIR motion detection](../docs/PIR.md)
-3. [Microphone sound detection](../docs/MICROPHONE.md)
+2. [Microphone sound detection](../docs/MICROPHONE.md)
+3. [PIR motion detection](../docs/PIR.md)
 4. [WeMo Actuator](../docs/WEMO.md)
 5. [Writing a driver](../docs/DRIVERS.md)
 6. [Next Steps](../docs/NEXTSTEPS.md)
