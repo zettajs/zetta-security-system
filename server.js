@@ -9,10 +9,12 @@ var LED = require('./devices/LED');
 var app = require('./apps/app');
 
 zetta()
+  .name('matt.dobson')
+  .link('http://zetta-cloud-2.herokuapp.com')
   .use(Buzzer, 'P9_14')
   .use(PIR, 'P9_12')
   .use(Microphone, 'P9_36')
   .use(WeMo)
   .use(LED, 'P9_41')
   .load(app)
-  .listen(1337)
+  .listen(1337);
