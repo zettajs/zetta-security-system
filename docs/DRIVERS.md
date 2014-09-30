@@ -7,11 +7,10 @@ that you want.
 ##Contents
 
 1. Getting started
-2. Create a basic scout
-3. State machine for an LED
-4. Writing our driver
-5. Incorporating our driver into Zetta
-6. Sample API response
+2. State machine for an LED
+3. Writing our driver
+4. Incorporating our driver into Zetta
+5. Sample API response
 
 ###Getting Started
 
@@ -35,22 +34,9 @@ with a file structure that looks like so:
   + `server.js`
   + `package.json`
 
-###Create a basic scout
-
-Our scouting logic is unique for this particular app. We set one up ahead of time for you. Your `index.js` file should only contain this
-one line for your scout.
-
-```javascript
-var LED = require('./led_driver.js');
-var Scout = require('zetta-auto-scout');
-module.exports = new AutoScout('led', LED);
-```
-
-That will export your scout for use in Zetta.
-
 ###State machine for an LED
 
-Next we'll create our state machine for use in Zetta. Our LED state machine will be basic. Drawing it out with state machine notation helps.
+We'll create our state machine for use in Zetta. Our LED state machine will be basic. Drawing it out with state machine notation helps.
 It should look a little like this.
 
 ![state machine](../docs/img/state_machine.png)
@@ -62,7 +48,7 @@ As you can see from the diagram. When our LED is `off` it can only transition to
 Below is the code for our driver. We'll go through it line by line.
 
 ```javascript
-var Device = require('zetta').Device;
+var Device = require('zetta-device');
 var util = require('util');
 var bone = require('bonescript');
 
@@ -142,7 +128,6 @@ var Buzzer = require('zetta-buzzer-bonescript-driver');
 var PIR = require('zetta-pir-bonescript-driver');
 var Microphone = require('zetta-microphone-bonescript-driver');
 var WeMo = require('zetta-wemo-driver');
-var AutoScout = require('zetta-auto-scout');
 var LED = require('./devices/LED');
 
 var app = require('./apps/app');
@@ -153,7 +138,7 @@ zetta()
   .use(Microphone, 'P9_36')
   .use(WeMo)
   .use(LED)
-  .load(app)
+  .use(app)
   .listen(1337)
 ```
 
