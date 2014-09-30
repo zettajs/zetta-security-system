@@ -40,7 +40,7 @@ zetta()
   .use(PIR, 'P9_12')
   .use(Microphone, 'P9_36')
   .use(WeMo)
-  .load(app)
+  .use(app)
   .listen(1337)
 ```
 

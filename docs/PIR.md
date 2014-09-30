@@ -42,7 +42,7 @@ zetta()
   .use(Buzzer)
   .use(Microphone)
   .use(PIR, 'P9_12')
-  .load(app)
+  .use(app)
   .listen(1337)
 ```
 

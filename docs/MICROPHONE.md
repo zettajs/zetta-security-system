@@ -94,7 +94,7 @@ var app = require('./apps/app');
 zetta()
   .use(Buzzer)
   .use(Microphone)
-  .load(app)
+  .use(app)
   .listen(1337)
 ```
 
