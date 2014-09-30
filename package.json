@@ -23,6 +23,7 @@
     "zetta-buzzer-bonescript-driver": "*",
     "zetta-microphone-bonescript-driver": "*",
     "zetta-pir-bonescript-driver": "*",
-    "zetta-wemo-driver": "*"
+    "zetta-wemo-driver": "*",
+    "zetta-device": "^0.3.0"
   }
 }
