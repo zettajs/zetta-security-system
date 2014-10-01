@@ -1,23 +1,18 @@
 module.exports = function(server) {
   var buzzerQuery = server.where({type: 'buzzer'});
-  var pirQuery = server.where({type: 'pir'});
   var microphoneQuery = server.where({type: 'microphone'});
+  var ledQuery = server.where({type: 'led'});
 
-  server.observe([buzzerQuery, pirQuery, microphoneQuery], function(buzzer, pir, microphone){
-    var microphoneReading = 0;
+  server.observe([buzzerQuery, microphoneQuery, ledQuery], function(buzzer, microphone, led){
 
     microphone.streams.volume.on('data', function(msg){
       if (msg.data > 10) {
-        if (pir.state === 'motion') {
           buzzer.call('turn-on', function() {});
+          led.call('turn-on', function(){});
         } else {
           buzzer.call('turn-off', function() {});
+          led.call('turn-off', function(){});
         }
-      }
-    });
-
-    pir.on('no-motion', function() {
-      buzzer.call('turn-off', function() {});
     });
 
   });

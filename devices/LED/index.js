@@ -1,13 +1,10 @@
-var Device = require('zetta-device');
+var Device = require('zetta').Device;
 var util = require('util');
 var bone = require('bonescript');
 
 var Led = module.exports = function(pin) {
   Device.call(this);
   this.pin = "P9_41";
-  //Everything is off to start
-  bone.pinMode(this.pin, bone.OUTPUT);
-  bone.digitalWrite(this.pin, 0);
 };
 util.inherits(Led, Device);
 
@@ -21,6 +18,10 @@ Led.prototype.init = function(config) {
     .map('turn-on', this.turnOn)
     .map('turn-off', this.turnOff)
     .map('toggle', this.toggle);
+    
+  //Everything is off to start
+  bone.pinMode(this.pin, bone.OUTPUT);
+  bone.digitalWrite(this.pin, 0);
 };
 
 Led.prototype.turnOn = function(cb) {
@@ -33,7 +34,7 @@ Led.prototype.turnOn = function(cb) {
 
 Led.prototype.turnOff = function(cb) {
   var self = this;
-  bone.digitalWrite(this.pin, 1, function() {
+  bone.digitalWrite(this.pin, 0, function() {
     self.state = 'off';
     cb();
   });
@@ -46,6 +47,3 @@ Led.prototype.toggle = function(cb) {
     this.call('turn-on', cb);
   }
 };
-
-
-
