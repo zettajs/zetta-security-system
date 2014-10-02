@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 var zetta = require('zetta');
 var Buzzer = require('zetta-buzzer-bonescript-driver');
 var Microphone = require('zetta-microphone-bonescript-driver');
@@ -15,4 +13,3 @@ zetta()
   .listen(1337, function(){
     console.log('Zetta is running at http://beaglebone.local:1337');
   });
->>>>>>> Head@{1}
