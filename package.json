@@ -20,7 +20,6 @@
   "dependencies": {
     "bonescript": "^0.2.4",
     "zetta": "^0.11.0",
-    "zetta-buzzer-bonescript-driver": "*",
-    "zetta-microphone-bonescript-driver": "*"
+    "zetta-buzzer-bonescript-driver": "*"
   }
 }
