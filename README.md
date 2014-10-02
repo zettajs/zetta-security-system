@@ -1,34 +1,26 @@
-#Building a Zetta Security System
+Zetta Security System
+=====================
 
-This is the repository for the Zetta Security System workshop and recipe. Here you'll find a complete Zetta app with
-all best practices put into place.
+This repository will allow you to follow along with the [IoT Security System Recipe](http://www.zettajs.org/recipes/2014/09/18/IoT-Security-System.html) on zettajs.org.
 
-You'll find the step by step guide for building the circuits and writing the Zetta code under the `/docs` directory.
+To move through the steps of this repo, update your place in the commit history to specific tags. This is how you get back to the initial state of the tutorial:  
 
-##Setup
+```bash
+git checkout -f step-0
+```
 
-1. You'll need node.js and npm installed. They can be found at http://nodejs.org/.
-2. You'll need to install Zetta with npm using `npm install zetta`
-3. You'll want to create the following directory structure
+Moving to step 1 will be called out in the tutorial at the link above, and will look like this:
 
-+ `zetta-security-system`
-  + `/apps`
-  + `/devices`
-  + `server.js`
-  + `package.json`
+```bash
+git checkout -f step-1
+```
 
-##Requirements
+You can always get back to here with `git checkout master`.
 
-+ Tutorial Level: **Intermediate**
-+ Time Commitment: **1 to 3 Hours**
-+ Goal: Zetta based home security system powered by a BeagleBone Black
-+ Topics Covered
-  + Device basics
-  + Server basics
-  + App basics
-  + npm based modules
-  + Driver creation
+`step-4` can be used as a good project prototype.
 
-##Getting Started
+Stuck on something? Here are a few ways to help with Zetta:
 
-Navigate to the [README](../master/docs/README.md) under the docs folder to get a supplies list, and start the tutorial.
+* [https://groups.google.com/forum/#!forum/zetta-discuss]()
+* [https://github.com/zettajs/zetta/issues]()
+* [Reference Documentation: http://zettajs.github.io/]()
