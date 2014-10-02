@@ -11,5 +11,5 @@ zetta()
   .use(LED, 'P9_41')
   .use(app)
   .listen(1337, function(){
-    console.log('Zetta is running at http://192.168.7.2:1337');
+    console.log('Zetta is running at http://beaglebone.local:1337');
   });
