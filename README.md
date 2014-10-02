@@ -17,6 +17,8 @@ git checkout -f step-1
 
 You can always get back to here with `git checkout master`.
 
+`step-4` can be used as a good project prototype.
+
 Stuck on something? Here are a few ways to help with Zetta:
 
 * [https://groups.google.com/forum/#!forum/zetta-discuss]()
