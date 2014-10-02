@@ -21,6 +21,7 @@
     "bonescript": "^0.2.4",
     "zetta": "^0.11.0",
     "zetta-buzzer-bonescript-driver": "*",
-    "zetta-microphone-bonescript-driver": "*"
+    "zetta-microphone-bonescript-driver": "*",
+    "zetta-device": "^0.3.0"
   }
 }
